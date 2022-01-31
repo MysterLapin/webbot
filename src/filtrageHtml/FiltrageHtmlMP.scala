@@ -19,7 +19,7 @@ class FiltrageHtmlMP extends FiltrageHtml {
     }
   }
 
-  def annalyseTexte(l: List[String], e: Expression): Boolean = {
+  private def annalyseTexte(l: List[String], e: Expression): Boolean = {
     (e,l) match {
       case (_, Nil) => false
       case (Mot(_), h::t)  => return e.equals(Mot(h)) || annalyseTexte(t, e)
@@ -27,7 +27,7 @@ class FiltrageHtmlMP extends FiltrageHtml {
       case (Ou(a, b), l) => annalyseTexte(l, a) || annalyseTexte(l, b)
     }
   }
-  def fonctionAux(l: List[Html], e: Expression): Boolean = {
+  private def fonctionAux(l: List[Html], e: Expression): Boolean = {
     l match {
       case Tag(x, y, z) :: Nil => return filtreHtml(Tag(x, y, z), e)
       case Tag(x, y, z) :: t   => return filtreHtml(Tag(x, y, z), e) || fonctionAux(t, e)

@@ -45,6 +45,5 @@ class HtmlVersStringIMP extends HtmlVersString {
    
      s
   }
- //print(traduire(HtmlExample.exemple))
 
 }
