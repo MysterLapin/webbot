@@ -20,6 +20,6 @@ object Main extends App {
           Tag("a", List(("href", "http://www.irisa.fr")),
             List(Texte("Lien")))))))))
   val test = new FiltrageHtmlMP
-  print(test.annalyseTexte(List("caribou","bout","ficelle"), Ou(Mot("caribhou"),Mot("boukt"))))
+  print(test.annalyseTexte(List("caribou","bout","ficelle"), Ou(Mot("caribou"),Mot("boukt"))))
   
 }
