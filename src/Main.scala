@@ -7,6 +7,7 @@ import library.Et
 import library.Ou
 import library.HtmlVersString
 import htmlVersString.HtmlVersStringIMP
+import productionResultat.ProductionResultatIMP
 
 
 object Main extends App {
@@ -21,9 +22,9 @@ object Main extends App {
         Tag("center", List(), List(
           Tag("a", List(("href", "http://www.irisa.fr")),
             List(Texte("Lien")))))))))
-  val test = new FiltrageHtmlMP
-  val test1 = new HtmlVersStringIMP
-  print(test1.traduire(exemple))
+  val test = new FiltrageURLsIMP
+  val test1 = new ProductionResultatIMP
+  val liste: List[(String,String)] = List(("test","test.html"),("test2","test2.html"))
  
-  
+   
 }
