@@ -4,7 +4,7 @@ import library.Html
 import library.Texte
 import library.Tag
 
-object HtmlVersStringIMP extends HtmlVersString {
+class HtmlVersStringIMP extends HtmlVersString {
   
   /**
   * 

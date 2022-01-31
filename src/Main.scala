@@ -5,6 +5,8 @@ import filtrageHtml.FiltrageHtmlMP
 import library.Mot
 import library.Et
 import library.Ou
+import library.HtmlVersString
+import htmlVersString.HtmlVersStringIMP
 
 
 object Main extends App {
@@ -20,6 +22,8 @@ object Main extends App {
           Tag("a", List(("href", "http://www.irisa.fr")),
             List(Texte("Lien")))))))))
   val test = new FiltrageHtmlMP
-  print(test.annalyseTexte(List("caribou","bout","ficelle"), Ou(Mot("caribou"),Mot("boukt"))))
+  val test1 = new HtmlVersStringIMP
+  print(test1.traduire(exemple))
+ 
   
 }
