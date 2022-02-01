@@ -9,7 +9,7 @@ class FiltrageURLsIMP extends FiltrageURLs {
   def filtreAnnonce(h: Html): List[String] = {
     h match {
       //recherche du motif href designant une url
-      case Tag(a, ("href", r) :: _, l) => return r :: fonctionAux(l)
+      case Tag(a, ("href", r ) :: _, l) => if (r.startsWith("https://search.vivastreet.com")) return r :: fonctionAux(l) else return fonctionAux(l)
       case Tag(a, _, l)                => return fonctionAux(l)
       case _                           => Nil
     }
