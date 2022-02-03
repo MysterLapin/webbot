@@ -12,29 +12,41 @@ import library.Ou
 class FiltrageHtmlMP extends FiltrageHtml {
 
   def filtreHtml(h: Html, e: Expression): Boolean = {
+    print(h)
     h match {
+      case Tag(_, _, Texte(a) :: Nil) =>
+        annalyseTexte(decoupageDuString(a), e)
+      case Tag(_, _, Texte(a) :: Nil) =>
+        annalyseTexte(decoupageDuString(a), e)
       case Tag(_, _, Texte(a) :: t) =>
-        println(decoupageDuString(a)); annalyseTexte(decoupageDuString(a), e) || fonctionAux(t, e)
-      case Tag(_, _, Texte(a) :: Nil) => annalyseTexte(decoupageDuString(a), e)
-      case Texte(a) =>
-        println(decoupageDuString(a)); annalyseTexte(decoupageDuString(a), e)
-      case _ => false
+        annalyseTexte(decoupageDuString(a), e) || fonctionAux(t, e)
+      case Tag(_, _, x) => filtreHtml(decoupageHtml(x), e)
+      case Texte(a)     => annalyseTexte(decoupageDuString(a), e)
     }
   }
 
-  private def decoupageDuString(s: String): List[String] = {
-    val temp = s.split(" ").toList
-    suppressionEspaces(temp)
+  private def decoupageHtml(l: List[Html]): Html = {
+    l match {
+      case Nil               => Texte("")
+      case Tag(x, y, z) :: t => Tag(x, y, z)
+      case Texte(a) :: t     => Texte(a)
+    }
   }
 
-  private def suppressionEspaces(s: List[String]): List[String] = {
+  def decoupageDuString(s: String): List[String] = {
+    val temp: List[String] = s.split(" ").toList
+    val retour: List[String] = suppressionEspaces(temp)
+    return retour
+  }
+
+  def suppressionEspaces(s: List[String]): List[String] = {
     s match {
       case Nil    => Nil
-      case h :: t => h.trim() :: suppressionEspaces(t)
+      case h :: t => h.replaceAll("\\s", "") :: suppressionEspaces(t)
     }
   }
 
-  private def annalyseTexte(l: List[String], e: Expression): Boolean = {
+   def annalyseTexte(l: List[String], e: Expression): Boolean = {
     (e, l) match {
       case (_, Nil)         => false
       case (Mot(_), h :: t) => e.equals(Mot(h)) || annalyseTexte(t, e)
@@ -42,11 +54,13 @@ class FiltrageHtmlMP extends FiltrageHtml {
       case (Ou(a, b), l)    => annalyseTexte(l, a) || annalyseTexte(l, b)
     }
   }
+  
   private def fonctionAux(l: List[Html], e: Expression): Boolean = {
     l match {
+      case Nil => false
       case Tag(x, y, z) :: Nil => filtreHtml(Tag(x, y, z), e)
       case Tag(x, y, z) :: t   => filtreHtml(Tag(x, y, z), e) || fonctionAux(t, e)
-      case _                   => false
+      case Texte(x) ::  t => filtreHtml(Texte(x) , e ) || fonctionAux( t , e ) 
     }
   }
 }

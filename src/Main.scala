@@ -28,7 +28,13 @@ object Main extends App {
   val test = new FiltrageHtmlMP
   val mot: String = ("yo ca va livre")
   
-  println(test.filtreHtml(OutilsWebObjet.obtenirHtml("https://search.vivastreet.com/achat-vente-cd-dvd/fr?lb=new&search=1&start_field=1&keywords=velo&cat_1=81&geosearch_text=&searchGeoId=0&sp_common_price%5Bstart%5D=&sp_common_price%5Bend%5D="), Mot("livre")))
+  val t = OutilsWebObjet.obtenirHtml("file:///private/student/e/ne/ylafontaine/workspace/TP345/lib/test.html")
+  println(test.filtreHtml(t,Mot("livre")))
+ //: val testListe = List("Coucou","truc","cafart")
+ // println("test annalyse  " + test.annalyseTexte(testListe, Et(Mot("truc"),Mot("cafart"))))
+  //println(test.decoupageDuString("test fonction decouper"))
+  
+  //println(test.filtreHtml(OutilsWebObjet.obtenirHtml("https://search.vivastreet.com/achat-vente-cd-dvd/fr?lb=new&search=1&start_field=1&keywords=velo&cat_1=81&geosearch_text=&searchGeoId=0&sp_common_price%5Bstart%5D=&sp_common_price%5Bend%5D="), Mot("livre")))
  
    
 }
