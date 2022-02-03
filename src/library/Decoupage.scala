@@ -37,6 +37,7 @@ trait FiltrageHtml {
    * @return true si le document satisfait l'expression e
    */
   def filtreHtml(h: Html, e: Expression): Boolean
+  def motDansText(mot : String , l : List[String]) : Boolean
 }
 
 trait ProductionResultat {
