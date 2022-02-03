@@ -10,6 +10,10 @@ import htmlVersString.HtmlVersStringIMP
 import productionResultat.ProductionResultatIMP
 import analysePage.AnalysePageIMP
 import library.OutilsWebObjet
+import library.Html
+import java.io.FileWriter
+import library.ParserExpression.lireExpression
+
 
 
 object Main extends App {
@@ -37,7 +41,7 @@ object Main extends App {
   //println(test.filtreHtml(OutilsWebObjet.obtenirHtml("https://search.vivastreet.com/achat-vente-cd-dvd/fr?lb=new&search=1&start_field=1&keywords=velo&cat_1=81&geosearch_text=&searchGeoId=0&sp_common_price%5Bstart%5D=&sp_common_price%5Bend%5D="), Mot("livre")))
  
    
-  val mot: String = ("Livre")
+  val mot1 : String = ("Livre")
 
   //Application
   val objectAnlysePageIMP = new AnalysePageIMP
