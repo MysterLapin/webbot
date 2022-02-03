@@ -9,6 +9,7 @@ class HtmlVersStringIMP extends HtmlVersString {
   /**
   * 
   * Transforme une liste de tuples de String en un String
+  * 
   * @param List[(String,String)]
   * @return String
   */
@@ -20,6 +21,7 @@ class HtmlVersStringIMP extends HtmlVersString {
   }
  /**
   * Parcours une liste d'Html et les renvoies en String
+  * 
   * @param List[Html]
   * @return String
   */
