@@ -5,7 +5,12 @@ import library.Tag
 import library.Texte
 
 class ProductionResultatIMP extends ProductionResultat {
-  
+ 
+  /**
+  *  @param l liste de couples solutions (titre, URL)
+  *  @return le document Html listant les solutions
+  */
+ 
   def reccResVersHtml(l: List[(String, String)]): Html = {
       l match {
         case (titre, url) :: rest => Tag("a", List(("href",url)), List(
@@ -15,8 +20,15 @@ class ProductionResultatIMP extends ProductionResultat {
       }
     }
   
+  /** 
+   *  A partir d'une liste de couples (titre, URL), produit un document Html, qui
+   *  liste les solutions sous la forme de liens cliquables
+   *  
+   *  @param l la liste des couples solutions (titre, URL)
+   *  @return le document Html listant les solutions
+   */
   override def resultatVersHtml(l : List[(String,String)]): Html = {
-    l match {
+   l match {
       case (titre, url) :: rest => Tag("html", List(),
           List(
             Tag("body", List(), List(

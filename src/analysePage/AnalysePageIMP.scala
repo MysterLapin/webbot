@@ -14,7 +14,15 @@ class AnalysePageIMP extends AnalysePage {
   
   val objFiltrageUrls: FiltrageURLs = new FiltrageURLsIMP
   val objFiltrageHtml: FiltrageHtml = new FiltrageHtmlMP
-  
+ 
+  /** 
+   *  A partir d'une URL de requête sur le site de référence et d'une expression exp,
+   *  retourne une liste de pages issues de la requête et satisfaisant l'expression
+   * 
+   * @param url l'URL de la requête
+   * @param exp l'expression à vérifier sur les pages trouvées
+   * @return la liste des couples (titre, ref) où ref est l'URL d'une page satisfaisant l'expression et titre est son titre
+   */
   def resultats(url: String, exp: Expression): List[(String, String)] = {
 
     val notreHtml: Html = OutilsWebObjet.obtenirHtml(url)
@@ -30,6 +38,16 @@ class AnalysePageIMP extends AnalysePage {
     return ("","")::Nil
   }
   
+  /**
+   * Après l'entrée de la requête, on construit une liste de couples (URL, Html) 
+   * correspondant au résultat de la recherche de l'expression
+   * 
+   * 
+   * @param lHtml une liste d'Html
+   * @param lURLs une liste d'URLs 
+   * @param exp 
+   * @return une liste de couple (String, Html)
+   */
   def creerListeURLHtml(lHtml: List[Html], lURLs: List[String], exp: Expression): List[(String, Html)] = {
     (lHtml, lURLs) match{
       case (Nil, _) => Nil
@@ -38,6 +56,12 @@ class AnalysePageIMP extends AnalysePage {
     }
   }
   
+  /**
+   * Creer une liste d'Html à partir de la liste de string
+   * 
+   * @param l List[String]
+   * @return une liste d'Html
+   */
   def creerListeHtml(l: List[String]): List[Html] = {
     l match{
       case Nil => Nil
