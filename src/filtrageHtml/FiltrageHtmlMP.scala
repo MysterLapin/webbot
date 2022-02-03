@@ -20,7 +20,7 @@ class FiltrageHtmlMP extends FiltrageHtml {
         annalyseTexte(decoupageDuString(a), e)
       case Tag(_, _, Texte(a) :: t) =>
         annalyseTexte(decoupageDuString(a), e) || fonctionAux(t, e)
-      case Tag(_, _, x) => filtreHtml(decoupageHtml(x), e) 
+      case Tag(_, _, x) => filtreHtml(decoupageHtml(x), e)
       case Texte(a)     => annalyseTexte(decoupageDuString(a), e)
     }
   }
