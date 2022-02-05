@@ -1,7 +1,7 @@
 import filtrageURLs.FiltrageURLsIMP
 import library.Tag
 import library.Texte
-import filtrageHtml.FiltrageHtmlMP
+import filtrageHtml.FiltrageHtmlIMP
 import library.Mot
 import library.Et
 import library.Ou
@@ -29,7 +29,7 @@ object Main extends App {
           Tag("a", List(("href", "http://www.irisa.fr")),
             List(Texte("Lien")))))))))
             
-  val test = new FiltrageHtmlMP
+  val test = new FiltrageHtmlIMP
   val mot: String = ("yo ca va livre")
   
   val t = OutilsWebObjet.obtenirHtml("file:///private/student/e/ne/ylafontaine/workspace/TP345/lib/test.html")

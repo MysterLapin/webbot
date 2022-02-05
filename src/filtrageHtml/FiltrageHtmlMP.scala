@@ -9,22 +9,22 @@ import library.Et
 import library.Mot
 import library.Ou
 
-class FiltrageHtmlMP extends FiltrageHtml {
+class FiltrageHtmlIMP extends FiltrageHtml {
 
-  def filtreHtml(h: Html, e: Expression): Boolean = {
-    print(h)
+  override def filtreHtml(h: Html, e: Expression): Boolean = {
     h match {
-      case Tag(_, _, Texte(a) :: Nil) =>
-        annalyseTexte(decoupageDuString(a), e)
-      case Tag(_, _, Texte(a) :: Nil) =>
-        annalyseTexte(decoupageDuString(a), e)
-      case Tag(_, _, Texte(a) :: t) =>
-        annalyseTexte(decoupageDuString(a), e) || fonctionAux(t, e)
-      case Tag(_, _, x) => filtreHtml(decoupageHtml(x), e)
-      case Texte(a)     => annalyseTexte(decoupageDuString(a), e)
+      case Texte(t) => annalyseTexte(decoupageDuString(t),e)
+      case Tag(_, _, listHtml) => fonctionAux(listHtml, e)
     }
   }
 
+  private def fonctionAux(l: List[Html], e: Expression): Boolean = {
+    l match {
+      case Nil => false
+      case Texte(t) :: r => annalyseTexte(decoupageDuString(t), e) || fonctionAux(r, e)
+      case Tag(_, _, listHtml) :: r => fonctionAux(listHtml, e) || fonctionAux(r, e)}
+  }
+  
   private def decoupageHtml(l: List[Html]): Html = {
     l match {
       case Nil               => Texte("")
@@ -36,7 +36,8 @@ class FiltrageHtmlMP extends FiltrageHtml {
   def decoupageDuString(s: String): List[String] = {
     val temp: List[String] = s.split(" ").toList
     val retour: List[String] = suppressionEspaces(temp)
-    return retour
+    val result = retour.filter(_ != "")
+    result
   }
 
   def suppressionEspaces(s: List[String]): List[String] = {
@@ -52,15 +53,6 @@ class FiltrageHtmlMP extends FiltrageHtml {
       case (Mot(_), h :: t) => e.equals(Mot(h)) || annalyseTexte(t, e)
       case (Et(a, b), l)    => annalyseTexte(l, a) && annalyseTexte(l, b)
       case (Ou(a, b), l)    => annalyseTexte(l, a) || annalyseTexte(l, b)
-    }
-  }
-  
-  private def fonctionAux(l: List[Html], e: Expression): Boolean = {
-    l match {
-      case Nil => false
-      case Tag(x, y, z) :: Nil => filtreHtml(Tag(x, y, z), e)
-      case Tag(x, y, z) :: t   => filtreHtml(Tag(x, y, z), e) || fonctionAux(t, e)
-      case Texte(x) ::  t => filtreHtml(Texte(x) , e ) || fonctionAux( t , e ) 
     }
   }
 }

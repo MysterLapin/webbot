@@ -5,7 +5,7 @@ import library.Expression
 import library.OutilsWeb
 import library.OutilsWebObjet
 import filtrageURLs.FiltrageURLsIMP
-import filtrageHtml.FiltrageHtmlMP
+import filtrageHtml.FiltrageHtmlIMP
 import library.FiltrageURLs
 import library.Html
 import library.FiltrageHtml
@@ -13,7 +13,7 @@ import library.FiltrageHtml
 class AnalysePageIMP extends AnalysePage {
   
   val objFiltrageUrls: FiltrageURLs = new FiltrageURLsIMP
-  val objFiltrageHtml: FiltrageHtml = new FiltrageHtmlMP
+  val objFiltrageHtml: FiltrageHtml = new FiltrageHtmlIMP
  
   /** 
    *  A partir d'une URL de requête sur le site de référence et d'une expression exp,
