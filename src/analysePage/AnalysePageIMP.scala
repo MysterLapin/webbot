@@ -9,6 +9,7 @@ import filtrageHtml.FiltrageHtmlIMP
 import library.FiltrageURLs
 import library.Html
 import library.FiltrageHtml
+import library._
 
 class AnalysePageIMP extends AnalysePage {
   
@@ -27,15 +28,21 @@ class AnalysePageIMP extends AnalysePage {
 
     val notreHtml: Html = OutilsWebObjet.obtenirHtml(url)
     
-    val listeURLs: List[String] = objFiltrageUrls.filtreAnnonce(notreHtml) // liste d'url
+    val listeURLs: List[String] = objFiltrageUrls.filtreAnnonce(notreHtml) // liste d'url (limité de nombre de lien ?)
     
-    var listeHtml: List[Html] = creerListeHtml(listeURLs)
+    print(listeURLs)
     
+    val listeHtml: List[Html] = creerListeHtml(listeURLs)
+    
+    val listURLsHtml : List[(String, Html)] = creerListeURLsHtml2(listeURLs, exp)
    //println("liste Html" + listeHtml)
-   
-    var listeURLHtml: List[(String, Html)] = creerListeURLHtml(listeHtml, listeURLs, exp)
+    /*
+     * var listeURLHtml: List[(String, Html)] = creerListeURLHtml(listeHtml, listeURLs, exp)
      println("listeURLHtml: " + listeURLHtml)
     return ("","")::Nil
+     */
+    
+    listURLsHtmlToRes(listURLsHtml)
   }
   
   /**
@@ -66,6 +73,46 @@ class AnalysePageIMP extends AnalysePage {
     l match{
       case Nil => Nil
       case h::t => OutilsWebObjet.obtenirHtml(h) :: creerListeHtml(t)
+    }
+  }
+  
+  def creerListeURLsHtml2(l: List[String], expr : Expression): List[(String,Html)] = {
+    l match {
+      case Nil    => Nil
+      case h :: t => 
+        if(objFiltrageHtml.filtreHtml(OutilsWebObjet.obtenirHtml(h), expr)) (h, OutilsWebObjet.obtenirHtml(h)) :: creerListeURLsHtml2(t, expr)
+        else creerListeURLsHtml2(t, expr)
+    }
+  }
+  
+  /**
+   * Recupère le titre d'un fichier Html (en partant du principe qu'il est bien écrit, c-à-d qu'il est unique 
+   * et qu'il n'y a pas de balise à l'intérieur de la balise title
+   * 
+   * @param h un Html
+   * @return son titre sous forme de String
+   */
+  def getTitle(h : Html): String = {
+    h match {
+      case Tag("title", _, Texte(titre) :: r) => titre
+      case Tag(_, _, listeHtml) => getTitleAux(listeHtml)
+      case _ => ""
+    }
+  }
+  
+  private def getTitleAux(listeHtml : List[Html]): String = {
+    listeHtml match {
+      case Nil => ""
+      case Tag("title", _, Texte(titre) :: r) :: t => titre
+      case Tag(_, _, listeHtml) :: t => getTitleAux(listeHtml) + getTitleAux(t)
+      case _ => ""
+    }
+  }
+  
+  def listURLsHtmlToRes(l : List[((String, Html))]) : List[((String, String))] = {
+    l match {
+      case Nil => Nil
+      case (url, html) :: r => (url, getTitle(html)) :: listURLsHtmlToRes(r)
     }
   }
 }
