@@ -16,7 +16,7 @@ class HtmlVersStringIMP extends HtmlVersString {
   private def listeTupleStringtoString(lt : List[(String,String)] ) : String = {
     lt match {
       case List() => "" 
-      case List(x) => " "+x._1 +"=\""+ x._2+"\""
+      case List(x) => " " + x._1 +"=\"" + x._2 + "\""
     }
   }
  /**
@@ -25,7 +25,7 @@ class HtmlVersStringIMP extends HtmlVersString {
   * @param List[Html]
   * @return String
   */
-  private def ListHtoS(lh : List[Html] ) :String = {
+  private def listHtoS(lh : List[Html] ) :String = {
     var res: String  = ""
       for( x <- lh){
         res.+=(traduire(x) )
@@ -41,8 +41,8 @@ class HtmlVersStringIMP extends HtmlVersString {
   def traduire(h: Html): String = {
     var s:String = ""
      h match {
-       case Texte(x) => x
-       case Tag(x,y,z) => s = "<" + x +  listeTupleStringtoString(y)  + ">" + ListHtoS(z) +  "</" + x +">"               
+       case Texte(x) => s = x
+       case Tag(x,y,z) => s = "<" + x +  listeTupleStringtoString(y)  + ">" + listHtoS(z) +  "</" + x + ">"               
      }  
    
      s
