@@ -18,9 +18,11 @@ class FiltrageURLsIMP extends FiltrageURLs {
   def filtreAnnonce(h: Html): List[String] = {
     h match {
       //recherche du motif href designant une url
-      case Tag(a, ("href", r ) :: _, l) => if (r.startsWith("https://search.vivastreet.com")) return r :: fonctionAux(l) else return fonctionAux(l)
-      case Tag(a, _, l)                => return fonctionAux(l)
-      case _                           => Nil
+      case Tag("a", List(("href", lien)), listHtml) =>
+        if (lien.startsWith("https://www.vivastreet.com/")) lien :: fonctionAux(listHtml)
+        else fonctionAux(listHtml)
+      case Tag(_, _, listHtml) => fonctionAux(listHtml)
+      case _                   => Nil
     }
   }
   
@@ -34,8 +36,10 @@ class FiltrageURLsIMP extends FiltrageURLs {
    */
   private def fonctionAux(l: List[Html]): List[String] = {
     l match {
-      case Tag(x, y, z) :: t => return filtreAnnonce(Tag(x, y, z)) ++ fonctionAux(t)
-      case _                 => return Nil
+      case Tag("a", List(("href", lien)), listHtml) :: reste => lien :: (fonctionAux(listHtml) ::: fonctionAux(reste))
+      case Tag(_, _, listHtml) :: reste => (fonctionAux(listHtml) ::: fonctionAux(reste))
+      case Texte(_) :: listHtml => fonctionAux(listHtml)
+      case _ => Nil
     }
   }
 }
